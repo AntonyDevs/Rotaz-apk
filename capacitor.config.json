@@ -1,0 +1,8 @@
+{
+  "appId": "com.rotaemandamento.app",
+  "appName": "Rota em andamento",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  }
+}
