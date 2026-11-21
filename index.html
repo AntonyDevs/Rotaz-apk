@@ -10,20 +10,30 @@
 <title>Rota em andamento</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#f3f4f6;color:#111827;padding-top:env(safe-area-inset-top)}
-header{background:#2563eb;color:#fff;padding:14px 16px;display:flex;align-items:center;justify-content:space-between}
-header h1{font-size:19px;margin:0}
-.hb{display:flex;gap:8px}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#f3f4f6;color:#111827;padding-top:env(safe-area-inset-top);-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+input,textarea{-webkit-user-select:text;user-select:text}
+header{position:relative;background:#2563eb;color:#fff;padding:14px 16px;display:flex;align-items:center;justify-content:space-between}
+header h1{font-size:18px;margin:0}
+.hb{display:flex;gap:6px}
+#mn{padding:9px 12px;font-size:18px;line-height:1}
+#menu{position:absolute;right:12px;top:100%;margin-top:6px;background:#fff;color:#111827;border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.25);padding:14px;z-index:15;min-width:230px}
+#menu[hidden]{display:none}
+#menu .t{font-size:13px;font-weight:700;color:#374151;margin-bottom:10px}
+#menu .z{display:flex;align-items:center;gap:10px}
+#menu .z button{flex:1;padding:10px 0;border:1px solid #d1d5db;border-radius:10px;background:#f9fafb;font-size:16px;font-weight:700;color:#111827}
+#menu .z button:disabled{opacity:.35}
+#menu .z span{min-width:48px;text-align:center;font-weight:700;color:#2563eb}
+#menu .r{margin-top:10px;width:100%;padding:9px;border:0;border-radius:10px;background:#eff6ff;color:#2563eb;font-weight:600;font-size:14px}
 .btn{border:0;border-radius:10px;padding:9px 14px;font-size:14px;font-weight:600;cursor:pointer;background:#fff;color:#2563eb}
 .tabs{display:flex;background:#fff;border-bottom:1px solid #e5e7eb;position:sticky;top:0;z-index:5}
 .tab{flex:1;padding:13px;text-align:center;font-weight:600;color:#6b7280;border:0;background:none;font-size:15px;border-bottom:3px solid transparent}
 .tab.on{color:#2563eb;border-color:#2563eb}
 main{padding:12px 12px calc(100px + env(safe-area-inset-bottom))}
 .item{background:#fff;border-radius:12px;padding:12px;margin-bottom:10px;display:flex;align-items:center;gap:8px;box-shadow:0 1px 2px rgba(0,0,0,.06)}
-.num{min-width:34px;height:34px;padding:0 6px;border-radius:17px;background:#dbeafe;color:#1d4ed8;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center}
+.num{min-width:calc(34px*var(--z,1));height:calc(34px*var(--z,1));padding:0 6px;border-radius:999px;background:#dbeafe;color:#1d4ed8;font-weight:700;font-size:calc(14px*var(--z,1));display:flex;align-items:center;justify-content:center}
 .info{flex:1;min-width:0}
-.code{font-weight:700;font-size:15px;word-break:break-all}
-.desc{white-space:pre-line;font-size:13px;color:#6b7280;margin-top:2px;word-break:break-word}
+.code{font-weight:700;font-size:calc(15px*var(--z,1));word-break:break-all}
+.desc{white-space:pre-line;font-size:calc(13px*var(--z,1));color:#6b7280;margin-top:2px;word-break:break-word}
 .acts{display:flex;gap:6px}
 .ic{width:38px;height:38px;border-radius:9px;border:1px solid #d1d5db;background:#f9fafb;font-size:16px;cursor:pointer}
 .ic:disabled{opacity:.3}
@@ -31,6 +41,9 @@ main{padding:12px 12px calc(100px + env(safe-area-inset-bottom))}
 .item{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 .item.drag{position:relative;z-index:4;box-shadow:0 10px 24px rgba(0,0,0,.28);transition:none;outline:2px solid #2563eb}
 .dh{font-size:12px;color:#6b7280;text-align:center;margin:0 0 10px}
+#cfgrp{margin-top:12px;padding:10px 12px;border-radius:10px;background:#fef3c7;color:#92400e;font-size:13px;line-height:1.5;word-break:break-word}
+#cfb{flex-direction:row-reverse}
+#cfb.col{flex-direction:column}
 .empty{text-align:center;color:#6b7280;padding:48px 20px;line-height:1.5}
 .fab{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(18px + env(safe-area-inset-bottom));background:#2563eb;color:#fff;border:0;border-radius:30px;padding:16px 28px;font-size:16px;font-weight:700;box-shadow:0 4px 14px rgba(37,99,235,.45);cursor:pointer}
 #scan{position:fixed;inset:0;background:#000;z-index:20;display:flex;flex-direction:column}
@@ -64,7 +77,12 @@ main{padding:12px 12px calc(100px + env(safe-area-inset-bottom))}
 <body>
 <header>
   <h1>Rota em andamento</h1>
-  <div class="hb"><button class="btn" id="clr">🗑 Limpar</button><button class="btn" id="imp">📎 Planilha</button></div>
+  <div class="hb"><button class="btn" id="clr">🗑 Limpar</button><button class="btn" id="imp">📎 Planilha</button><button class="btn" id="mn" aria-label="Menu">⋮</button></div>
+<div id="menu" hidden>
+    <div class="t">Tamanho da letra das tarefas</div>
+    <div class="z"><button id="zm" aria-label="Diminuir">A−</button><span id="zv">100%</span><button id="zp" aria-label="Aumentar">A+</button></div>
+    <button class="r" id="zr">Restaurar padrão</button>
+  </div>
 </header>
 <input type="file" id="file" accept=".xlsx,.xls,.csv" hidden>
 <div class="tabs">
@@ -98,13 +116,15 @@ main{padding:12px 12px calc(100px + env(safe-area-inset-bottom))}
 </div>
 <div id="cf" hidden>
   <div class="box">
-    <h2>Tarefa encontrada</h2>
+    <h2 id="cft">Concluir tarefa</h2>
     <div class="big" id="cfcode"></div>
     <div class="desc" id="cfdesc" style="margin:8px 0 0"></div>
-    <p style="font-size:14px;color:#374151;margin:14px 0 0">Deseja dar baixa e marcar como <b>concluída</b>?</p>
-    <div class="row" style="margin-top:18px">
-      <button class="btn gray" id="cn">Não</button>
+    <div id="cfgrp" hidden></div>
+    <p id="cq" style="font-size:14px;color:#374151;margin:14px 0 0"></p>
+    <div class="row" id="cfb" style="margin-top:18px">
+      <button class="btn blue" id="call">Concluir todas</button>
       <button class="btn blue" id="cy">Concluir</button>
+      <button class="btn gray" id="cn">Não</button>
     </div>
   </div>
 </div>
@@ -161,7 +181,7 @@ $('list').onclick = e => {
   if (Date.now() < noClickUntil) return;
   const b = e.target.closest('button'); if (!b) return;
   const id = b.dataset.i, a = b.dataset.a;
-  if (a === 'ok') setDone(id, true);
+  if (a === 'ok'){ const t = tasks.find(x => x.id === id); if (t) openConfirm(t, false); }
   else if (a === 'undo') setDone(id, false);
 };
 
@@ -400,27 +420,61 @@ function handle(code){
   if (!t){ if (!skip.has(code)) openAdd(code); return; }
   if (t.done){ toast(t.id + ' já estava concluída'); return; }
   if (skip.has(t.id)) return;
-  openConfirm(t);
+  openConfirm(t, true);
 }
 
 // ---- Confirmar baixa ----
-let cfTask = null;
-function openConfirm(t){
-  paused = true; cfTask = t;
+let cfTask = null, cfGroup = [];
+const gkey = t => (t.desc || '').toLowerCase().replace(/\s+/g, ' ').trim();
+function groupOf(t){
+  const k = gkey(t);
+  return k ? tasks.filter(x => !x.done && x !== t && gkey(x) === k) : [];
+}
+function openConfirm(t, scan){
+  paused = true; cfTask = t; cfGroup = groupOf(t);
+  const g = cfGroup.length > 0;
+  $('cft').textContent = scan ? 'Tarefa encontrada' : 'Concluir tarefa';
   $('cfcode').textContent = '#' + t.n + ' · ' + t.id;
   $('cfdesc').textContent = t.desc || '';
+  $('cfgrp').hidden = !g;
+  if (g) $('cfgrp').innerHTML = '<b>' + (cfGroup.length === 1 ? 'Outra tarefa tem' : cfGroup.length + ' outras tarefas têm') +
+    ' o mesmo endereço, bairro e QD e N:</b><br>' + cfGroup.map(x => '#' + esc(String(x.n)) + ' · ' + esc(x.id)).join('<br>');
+  $('cq').textContent = g ? 'Deseja concluir as tarefas juntas?' : 'Deseja dar baixa e marcar como concluída?';
+  $('call').hidden = !g;
+  $('call').textContent = 'Concluir todas (' + (cfGroup.length + 1) + ')';
+  $('cy').textContent = g ? 'Só esta tarefa' : 'Concluir';
+  $('cfb').classList.toggle('col', g);
   $('cf').hidden = false;
   if (navigator.vibrate) navigator.vibrate(60);
 }
-function closeConfirm(){ $('cf').hidden = true; paused = false; cfTask = null; }
+function closeConfirm(){ $('cf').hidden = true; paused = false; cfTask = null; cfGroup = []; }
 $('cn').onclick = () => { if (cfTask) skip.add(cfTask.id); closeConfirm(); };
-$('cy').onclick = () => {
-  const t = cfTask; closeConfirm();
-  if (!t) return;
-  t.done = true; save(); render();
+function complete(list){
+  closeConfirm();
+  list.forEach(x => { x.done = true; });
+  save(); render();
   if (navigator.vibrate) navigator.vibrate(120);
-  toast('✓ ' + t.id + ' concluída', 'good');
-};
+  toast(list.length > 1 ? '✓ ' + list.length + ' tarefas concluídas' : '✓ ' + list[0].id + ' concluída', 'good');
+}
+$('call').onclick = () => { if (cfTask) complete([cfTask, ...cfGroup]); };
+$('cy').onclick = () => { if (cfTask) complete([cfTask]); };
+
+// ---- Menu: tamanho da letra ----
+const ZKEY = 'tarefas-qr-z', ZS = [0.85, 1, 1.15, 1.3, 1.5, 1.75];
+let zi = 1;
+try { const v = parseInt(localStorage.getItem(ZKEY)); if (v >= 0 && v < ZS.length) zi = v; } catch(e){}
+function applyZ(){
+  document.documentElement.style.setProperty('--z', ZS[zi]);
+  $('zv').textContent = Math.round(ZS[zi] * 100) + '%';
+  $('zm').disabled = zi === 0; $('zp').disabled = zi === ZS.length - 1;
+  try { localStorage.setItem(ZKEY, zi); } catch(e){}
+}
+$('mn').onclick = e => { e.stopPropagation(); $('menu').hidden = !$('menu').hidden; };
+$('zm').onclick = () => { if (zi > 0){ zi--; applyZ(); } };
+$('zp').onclick = () => { if (zi < ZS.length - 1){ zi++; applyZ(); } };
+$('zr').onclick = () => { zi = 1; applyZ(); };
+document.addEventListener('click', e => { if (!e.target.closest('#menu, #mn')) $('menu').hidden = true; });
+applyZ();
 
 render();
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
